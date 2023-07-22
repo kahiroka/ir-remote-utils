@@ -87,8 +87,8 @@ def genparams(mode, temp=28, fanspeed=1, humidity=0):
     params += '{:02X}{:02X}'.format((onact<<5)+(offact<<4)+(onmin>>8), ((onact<<5)+(offact<<4)+(onmin>>8))^0xff)
     # 26-27: fanspeed: 1-4,5(auto)
     # mode: 3(cool),4(drycool),5(dehumidify),6(heat),7(auto),9(autodehumidify),10(quicklaundry),12(condensation ctrl)
-    mode = 3 if mode == 0 else mode
-    params += '{:02X}{:02X}'.format((fanspeed<<4)+mode, ((fanspeed<<4)+mode)^0xff)
+    mode2 = 3 if mode == 0 else mode
+    params += '{:02X}{:02X}'.format((fanspeed<<4)+mode2, ((fanspeed<<4)+mode2)^0xff)
     # 28-29: on/off
     onoff = 0 if mode == 0 else 1
     # params += '{:02X}{:02X}'.format(0xe0+(onoff<<4)+1, (0xe0+(onoff<<4)+1)^0xff)
@@ -107,7 +107,7 @@ def genparams(mode, temp=28, fanspeed=1, humidity=0):
 
 def regressiontest():
     testcases = [
-        {'mode':0, 'temp':28, 'fan':1, 'code':'01100040BFFF00CC33926D13EC708F00FF00FF00FF00FF00FF13ECD12E00FF00FF'},
+        {'mode':0, 'temp':28, 'fan':1, 'code':'01100040BFFF00CC33926D13EC708F00FF00FF00FF00FF00FF13ECC13E00FF00FF'},
         {'mode':3, 'temp':28, 'fan':1, 'code':'01100040BFFF00CC33926D13EC708F00FF00FF00FF00FF00FF13ECD12E00FF00FF'},
         {'mode':5, 'temp':28, 'fan':1, 'code':'01100040BFFF00CC33946B718E708F00FF00FF00FF00FF00FF15EAD12E00FF00FF'}
         ]
